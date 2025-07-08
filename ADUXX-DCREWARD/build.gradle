@@ -1,0 +1,86 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id("xyz.jpenilla.run-paper") version "2.3.1"
+}
+
+group 'dev.aduxx'
+version '1.0'
+
+repositories {
+    mavenCentral()
+
+    maven {
+        name = "papermc-repo"
+        url = "https://repo.papermc.io/repository/maven-public/"
+    }
+    maven {
+        name = "sonatype"
+        url = "https://oss.sonatype.org/content/groups/public/"
+    }
+
+    maven {
+        url = "https://libraries.minecraft.net/"
+    }
+}
+
+dependencies {
+
+    compileOnly("io.papermc.paper:paper-api:1.21.6-R0.1-SNAPSHOT")
+
+
+    implementation 'net.dv8tion:JDA:5.0.0-beta.24'
+
+
+    compileOnly 'com.mojang:authlib:1.5.25'
+}
+
+
+def targetJavaVersion = 21
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+
+    options.release.set(targetJavaVersion)
+}
+
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
+    }
+}
+
+shadowJar {
+
+    archiveClassifier.set('')
+
+    archiveFileName = "${project.name}-${project.version}.jar"
+
+
+    relocate 'net.dv8tion.jda', 'dev.aduxx.libs.jda'
+    relocate 'org.slf4j', 'dev.aduxx.libs.slf4j'
+    relocate 'com.fasterxml.jackson', 'dev.aduxx.libs.jackson'
+    relocate 'com.neovisionaries.ws.client', 'dev.aduxx.libs.neovisionaries'
+    relocate 'okio', 'dev.aduxx.libs.okio'
+    relocate 'okhttp3', 'dev.aduxx.libs.okhttp3'
+    relocate 'org.jetbrains.annotations', 'dev.aduxx.libs.jetbrains.annotations'
+
+}
+
+
+
+
+tasks {
+    runServer {
+        minecraftVersion("1.21")
+    }
+}
