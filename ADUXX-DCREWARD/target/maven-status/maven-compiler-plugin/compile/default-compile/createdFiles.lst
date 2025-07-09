@@ -1,0 +1,7 @@
+dev\aduxx\aDUXXDCREWARD\RewardManager.class
+dev\aduxx\aDUXXDCREWARD\RewardStorage.class
+Discord\DiscordListener.class
+listeners\GuiHandler.class
+chatutil\ChatUtil.class
+commands\RewardCommand.class
+dev\aduxx\aDUXXDCREWARD\DiscordRewardPlugin.class
