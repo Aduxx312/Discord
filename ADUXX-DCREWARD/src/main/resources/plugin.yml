@@ -1,8 +1,0 @@
-name: ADUXX-DCREWARD
-version: '1.2'
-main: dev.aduxx.aDUXXDCREWARD.DiscordRewardPlugin
-author: Aduxx
-description: Plugin na nagrode discord
-api-version: '1.21'
-commands:
-  nagroda:
